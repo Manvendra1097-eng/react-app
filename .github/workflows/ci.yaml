@@ -19,10 +19,10 @@ jobs:
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v18
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: react-app
-          environment_name: React-app-env
+          aws_access_key: ${{ secrets.ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.SECRET_ACCESS_KEY }}
+          application_name: webapp
+          environment_name: Webapp-env
           region: us-east-1
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
