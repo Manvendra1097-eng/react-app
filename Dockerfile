@@ -1,12 +1,10 @@
 FROM node:20-alpine3.18
 
-ENV PORT=3000
-
 WORKDIR /bookapp-react-js
-COPY . /bookapp-react-js
+COPY package.json .
+RUN npm install
+COPY . .
 RUN npm run build
-EXPOSE ${PORT}
-CMD ["npm", "start"]
 
 
 FROM nginx:1.24-alpine as prod-stage
