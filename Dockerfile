@@ -1,10 +1,16 @@
 FROM node:16-alpine as builder
-WORKDIR '/app'
-COPY package.json .
-RUN npm install
-COPY . .
-RUN npm run build
 
-FROM nginx
-EXPOSE 80
-COPY --from=builder /app/build /usr/share/nginx/html
+# set working directory
+WORKDIR /app
+
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install
+
+# start app
+CMD ["npm", "run", "start"]
+
+# expose port
+EXPOSE 3000
+

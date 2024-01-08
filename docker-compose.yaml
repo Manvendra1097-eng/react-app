@@ -1,8 +1,12 @@
-version: '3'
+# docker-compose.prod.yml
+
+version: '3.8'
+
 services:
-  web:
+  frontend-prod:
+    container_name: frontend-prod
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     ports:
       - '80:80'
