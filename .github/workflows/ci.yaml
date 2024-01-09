@@ -22,7 +22,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: aws-ec2
+    runs-on: ec2runner
 
     steps:
       - name: Pull image from dockerhub
