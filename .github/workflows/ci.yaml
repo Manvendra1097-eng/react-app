@@ -32,4 +32,4 @@ jobs:
         run: docker rm -f reactContainer
 
       - name: Run docker container
-        run: docker run -d -p 3000:80 --name:reactContainer manvendra1097/reactjs-app
+        run: docker run -d -p 3000:80 --name=reactContainer manvendra1097/reactjs-app
