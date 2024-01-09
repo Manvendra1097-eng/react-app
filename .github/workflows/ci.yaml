@@ -22,7 +22,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ec2runner
+    runs-on: self-hosted
 
     steps:
       - name: Pull image from dockerhub
