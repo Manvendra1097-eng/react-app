@@ -1,16 +1,15 @@
-FROM node:16-alpine as builder
-
-# set working directory
+# build environment
+FROM node:alpine3.18 as build
 WORKDIR /app
-
-# install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
+COPY package.json .
 RUN npm install
+COPY . .
+RUN npm run build
 
-# start app
-CMD ["npm", "run", "start"]
-
-# expose port
-EXPOSE 3000
-
+# production environment
+FROM nginx:1.23-alpine
+WORKDIR /usr/share/nginx/html
+RUN rm -rf *
+COPY --from=build /app/build .
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

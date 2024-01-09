@@ -5,30 +5,32 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Latest Repo
         uses: actions/checkout@master
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
       - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+        run: docker -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*'
+      - name: Build docker image
+        run: docker build -t manvendra1097/reactjs-app .
 
-  deploytoaws:
+      - name: Push to docker DockerHub
+        run: docker push manvendra1097/reactjs-app:latest  
+
+  deploy:
+    needs: build
     runs-on: aws-ec2
 
     steps:
       -name: Pull image from dockerhub
-       uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+       run: docker pull manvendra1097/reactjs-app:latest
+      -name: Delete old container
+       run: docker rm -f reactContainer
+      -name: Run docker container
+       run: docker run -d -p 3000:80 --name:reactContainer manvendra1097/reactjs-app
+       
+ 
+
