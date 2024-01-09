@@ -18,19 +18,18 @@ jobs:
         run: docker build -t manvendra1097/reactjs-app .
 
       - name: Push to docker DockerHub
-        run: docker push manvendra1097/reactjs-app:latest  
+        run: docker push manvendra1097/reactjs-app:latest
 
   deploy:
     needs: build
     runs-on: aws-ec2
 
     steps:
-      -name: Pull image from dockerhub
-       run: docker pull manvendra1097/reactjs-app:latest
-      -name: Delete old container
-       run: docker rm -f reactContainer
-      -name: Run docker container
-       run: docker run -d -p 3000:80 --name:reactContainer manvendra1097/reactjs-app
-       
- 
+      - name: Pull image from dockerhub
+        run: docker pull manvendra1097/reactjs-app:latest
 
+      - name: Delete old container
+        run: docker rm -f reactContainer
+
+      - name: Run docker container
+        run: docker run -d -p 3000:80 --name:reactContainer manvendra1097/reactjs-app
